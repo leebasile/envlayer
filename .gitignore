@@ -1,0 +1,14 @@
+node_modules/
+
+.env.local
+build/
+*.tsbuildinfo
+coverage/
+out/
+*.log
+dist/
+npm-debug.log*
+.env
+*.swo
+.vscode/
+*.js.map
