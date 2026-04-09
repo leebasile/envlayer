@@ -9,6 +9,8 @@ import { buildMergeCommand } from "./commands/merge";
 import { buildAuditCommand } from "./commands/audit";
 import { buildCopyCommand } from "./commands/copy";
 import { buildRenameCommand } from "./commands/rename";
+import { buildSetCommand } from "./commands/set";
+import { buildDeleteCommand } from "./commands/delete";
 
 export function buildCLI(): Command {
   const program = new Command();
@@ -16,7 +18,7 @@ export function buildCLI(): Command {
   program
     .name("envlayer")
     .description("Manage and validate environment variable schemas across deployment environments")
-    .version("1.0.0");
+    .version("0.1.0");
 
   program.addCommand(buildInitCommand());
   program.addCommand(buildValidateCommand());
@@ -28,6 +30,8 @@ export function buildCLI(): Command {
   program.addCommand(buildAuditCommand());
   program.addCommand(buildCopyCommand());
   program.addCommand(buildRenameCommand());
+  program.addCommand(buildSetCommand());
+  program.addCommand(buildDeleteCommand());
 
   return program;
 }
