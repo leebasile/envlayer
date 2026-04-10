@@ -35,3 +35,23 @@ export function loadAndValidate(options: EnvLayerOptions): EnvLayerResult {
     valid: result.valid,
   };
 }
+
+/**
+ * Like {@link loadAndValidate}, but throws an `Error` if validation fails.
+ * The error message includes all validation errors joined by newlines,
+ * making it convenient for fail-fast startup scenarios.
+ *
+ * @throws {Error} When one or more schema validation errors are found.
+ */
+export function loadAndValidateOrThrow(options: EnvLayerOptions): Omit<EnvLayerResult, 'errors' | 'valid'> {
+  const result = loadAndValidate(options);
+
+  if (!result.valid) {
+    throw new Error(`Environment validation failed:\n${result.errors.join('\n')}`);
+  }
+
+  return {
+    vars: result.vars,
+    sources: result.sources,
+  };
+}
