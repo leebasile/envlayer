@@ -14,8 +14,22 @@ export interface CheckResult {
   errors: string[];
 }
 
+/**
+ * Derives the environment name from a .env file path.
+ * Examples: ".env.production" -> "production", ".env" -> "default"
+ */
+function deriveEnvironmentName(filePath: string): string {
+  const basename = path.basename(filePath);
+  const match = basename.match(/^\.env\.?(.*)$/);
+  return match && match[1] ? match[1] : 'default';
+}
+
+/**
+ * Checks a single .env file against the given schema.
+ * Returns a CheckResult describing validity, missing keys, extra keys, and errors.
+ */
 export function checkEnvFile(envFilePath: string, schemaPath: string): CheckResult {
-  const environment = path.basename(envFilePath, path.extname(envFilePath)).replace(/^\.env\.?/, '') || 'default';
+  const environment = deriveEnvironmentName(envFilePath);
   const schema = loadSchema(schemaPath);
 
   if (!fs.existsSync(envFilePath)) {
