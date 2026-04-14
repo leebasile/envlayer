@@ -47,3 +47,14 @@ export function formatFlattenJson(result: FlattenResult): string {
 export function formatFlattenSummary(result: FlattenResult): string {
   return `${result.totalKeys} keys merged, ${result.overriddenKeys} conflict(s) resolved.`;
 }
+
+/**
+ * Formats the flattened result as a dotenv-compatible string.
+ * Keys are sorted alphabetically for deterministic output.
+ */
+export function formatFlattenEnv(result: FlattenResult): string {
+  return Object.entries(result.merged)
+    .sort(([a], [b]) => a.localeCompare(b))
+    .map(([key, value]) => `${key}=${value}`)
+    .join("\n");
+}
