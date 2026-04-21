@@ -1,21 +1,17 @@
-export type EnvVarType = 'string' | 'number' | 'boolean' | 'url' | 'email';
+export type EnvFieldType = "string" | "number" | "boolean" | "url" | "email";
 
-export interface EnvVarDefinition {
-  type: EnvVarType;
+export interface EnvFieldSchema {
+  type: EnvFieldType;
   required?: boolean;
-  default?: string | number | boolean;
-  description?: string;
+  default?: string;
   pattern?: string;
+  description?: string;
+  deprecated?: boolean;
 }
 
 export interface EnvSchema {
-  [key: string]: EnvVarDefinition;
-}
-
-export interface ValidationResult {
-  valid: boolean;
-  errors: ValidationError[];
-  warnings: ValidationWarning[];
+  version?: string;
+  fields: Record<string, EnvFieldSchema>;
 }
 
 export interface ValidationError {
@@ -26,4 +22,10 @@ export interface ValidationError {
 export interface ValidationWarning {
   key: string;
   message: string;
+}
+
+export interface ValidationResult {
+  valid: boolean;
+  errors: string[];
+  warnings: string[];
 }
